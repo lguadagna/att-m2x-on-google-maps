@@ -1,0 +1,26 @@
+
+  #error {
+    visibility: hidden; 
+   }
+
+      #map {
+        height: 80vh;
+        left: 0px;
+        position: absolute;
+        right: 0px;
+        border: solid blue; 
+      }
+  /*https://github.com/niklausgerber/responsive-google-or-bing-maps/    */
+
+<style>
+.Flexible-container {position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;},
+.Flexible-container iframe,   
+.Flexible-container object,  
+.Flexible-container embed {position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+</style>
+
+
+ 
+      
+
+    

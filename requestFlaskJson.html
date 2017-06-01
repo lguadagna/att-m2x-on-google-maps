@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+ <head>
+    <title>Flask Intro - login page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="cs/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script type="text/javascript" src="js/jquery.min.js"></script>  
+ </head>
+ <body>
+    <input id="submitbutton" type="submit" value="Update Locations">
+    
+    <script type="text/javascript">
+
+    function postResults(json){
+//     can only log object if single value in console.log
+     console.log("jsonp callback returned");
+     //var m2x_locations = json; 
+     //console.log(json);
+
+    }
+    // a nice explaination of asynch calls and responses 
+    //https://stackoverflow.com/questions/16076009/confused-on-jquery-ajax-done-function
+    function runPyScript(){
+        var m2x_url = "HTTP://127.0.0.1:5000/getM2XNames"; 
+        console.log('sending device request to getM2XNames' +  m2x_url);
+         var ajResult = $.ajax({
+            url: "HTTP://127.0.0.1:5000/getM2XNames",
+            dataType: "jsonp",
+            crossDomain: true,
+            jsonpCallback: "postResults",
+            async: true, 
+            timeout: 3000,
+            error: function() {
+               alert("new devices not available now, try again later")
+            }
+         }).done(function(result){
+          console.log('Sample of data: ', result );
+          return result; 
+            //var arr = $.map(result, function(value, index) {
+            //   return [value]; 
+            //})
+            
+          //console.log( arr); 
+          //   return arr; 
+   
+         } );
+    }
+       
+
+    $('#submitbutton').click(function(){
+        datatosend = '{val: matrix}';
+        result = runPyScript();
+       // this does not get return values
+        console.log('Got back ' + JSON.stringify(result));
+    });
+
+</script>
+</html>
