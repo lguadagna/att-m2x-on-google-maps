@@ -3,6 +3,7 @@
 // License: MIT (http://www.opensource.org/licenses/mit-license.php)
       
       var map;
+      var flaskServerName = "cowbell.employees.org"
       
       // Create a new blank array for all the listing markers.
       var markers = [];
@@ -21,10 +22,10 @@
      // a nice explaination of asynch calls and responses 
      //https://stackoverflow.com/questions/16076009/confused-on-jquery-ajax-done-function
      function runPyScript(){
-         var m2x_url = "HTTP://127.0.0.1:5000/getM2XNames"; 
+         var m2x_url = "HTTP://" + flaskServerName + ":5000/getM2XNames"; 
          console.log('sending device request to getM2XNames' +  m2x_url);
          var ajResult = $.ajax({
-             url: "HTTP://127.0.0.1:5000/getM2XNames",
+             url: m2x_url,
              dataType: "jsonp",
              crossDomain: true,
              async: true ,
@@ -72,7 +73,7 @@ function postResults(data) {
 //       -H "X-M2X-KEY: 3ca45efac99756802ab65c4250e27cb2"
          //var m2x_url = 'http://api-m2x.att.com/v2/devices/' + deviceID + '/streams'; 
          
-          var bps_url = "HTTP://127.0.0.1:5000/getStream/" + deviceID; 
+          var bps_url = "HTTP://" + flaskServerName + ":5000/getStream/" + deviceID; 
           console.log('sending BPS request to attm2x ' +  bps_url);
           var ajResult = $.ajax({
  
