@@ -1,0 +1,49 @@
+# Requirements
+
+## Python 2.7
+
+## python flask
+2.
+```
+   pip install flask
+```
+   *to install to anything but standard location this command looks like:
+```
+   pip install --target=home/lisa/python flask
+```
+   You will need to include this new target directory in your PYTHONPATH like:
+```
+   PYTHONPATH=/home/lisa/python
+```
+
+## flask cors
+3.
+```
+pip install flask-cors
+```
+   OR to install to non standard location:
+```
+   pip install --target=/home/lisa/python flask-cors
+```
+ 
+## att m2x libraries
+4. install python libraries for m2x
+```
+   pip install m2x
+```
+   OR
+```
+   pip install --target=/home/lisa/python m2x
+```
+   
+   Read about the att m2x client here. The key for access my devices is included with my code. 
+ 
+* [attm2x]  ( https://github.com/attm2x/m2x-python/blob/master/README.md )
+
+
+after installing all above, pull this respository. 
+
+The m2x repository did not resurn jsonp, and did not have endpoints that were useful to
+my web page. So i put a front end flask application on and used the python libraries to access
+the m2x data. 
+   
