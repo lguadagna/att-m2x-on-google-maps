@@ -14,8 +14,13 @@ Use the att API to post location and stream data on a google map for Udacity cou
 
 ## Installation
 Pull the respsitory.
+update the python environment 
+```
+pip install -r  python.requirements.txt
+```
 
 ## Running
+
 Open the index.html page
 
 If you choose to also run your own flask server locally,
