@@ -91,7 +91,7 @@ $(document).ready(function() {
 
         };
 
-    };
+    }
 
     ko.applyBindings(new viewModel()); // This makes Knockout get to work
 
