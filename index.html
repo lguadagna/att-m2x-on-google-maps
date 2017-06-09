@@ -26,50 +26,23 @@
               <h5 class="text-primary" > ibConnect Sensors </h5>
               <div class="col-sm-12 form-control">     
                 <div class="nav flex-column ">
-	
-<!--									 <ul class="dropdown-menu" role="menu"> 
--->									  <!--<button class="btn btn-default dropdown-toggle "> Region </button>-->
 						        <select data-bind="click: showRegion,  options: optionValues, value: selectedOptionValue"></select>
-
 									<div class="col-sm-12">
-										<!--<li  class=" input-group-addon" data-bind="foreach: {data: locations, as: 'visibleLocations' }">-->
 										<li class="input-group-addon"  data-bind="foreach: visibleLocations ">
-								    <!--<li  class=" input-group-addon" data-bind="foreach: {data: locations, as: 'location' }">-->
-								  		<!--<input type="checkbox" value=$data.name data-bind="checkedValue=$data.name" />-->
-										  <!-- OK<input type="checkbox" data-bind="checkedValue=$data.name  checked: selectedLocations" />-->
 										  <input type="checkbox"
-														 data-bind="value:$data, click: updateChecked,  checked: $parent.selectedLocations" />
-
-										  <!--<input type="checkbox" data-bind="checked: selectedLocations" />-->
+													data-bind="value:$data, click: updateChecked,  checked: $parent.selectedLocations" />
 									    <span data-bind="text: name" style="overflow: hidden"></span>
-								  
-							
 										</li>
-							<!--      <P> ** Selected Locations **</P>-->
-							<!--			<span data-bind="foreach: selectedLocations" >-->
-							<!--				<p data-bind="text: $data.name "></p>-->
-							<!--				 -->
-							<!--			</span>-->
-							<!--			<p>***visible locations *</p>-->
-							<!--			<span data-bind="foreach: visibleLocations" >-->
-							<!--				<p data-bind="text: $data.name "></p>-->
-							<!--			</span>-->
-										<!--<p>***visible selected locations *</p>-->
 										<hr /> 
 										<span data-bind="foreach: visibleSelectedLocations" >
 										<h6 class="label label-primary">	<span data-bind="text: $data.name" > ( </span> bpsu:  <span data-bind="text: $data.bpsu"></span>
 											bpsd:  <span data-bind="text: $data.bpsd"> ) </span></h6>
 											<br>
-										</span>
-										
+										</span>	
 							    </div>
-						
-								
 								</div>
 							</div>						
-              
             </nav>
-		  
             <main class = "col-sm-9  pt-3">
       
            <!-- Responsive iFrame -->
@@ -80,15 +53,11 @@
                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfe8r1yXNiDjgUF9LT6DO-TXVeJR2uwPM&v=3&callback=initMap">
                 </script>   
             </main>
-
         </div>
- 
 <!--      end container-->
-    
       </div>
 <!--     this has to be at the bottom to function -->
  	<script type="text/javascript" src="js/KOmodel.js" > </script>
-	<!--<script > $(document).ready(function() {show("All");  } ) </script>-->
 	<script>
 	
 	</script>

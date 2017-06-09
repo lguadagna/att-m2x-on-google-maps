@@ -9,47 +9,27 @@ Use the att API to post location and stream data on a google map for Udacity cou
 
 ## installation running here:
 
-* [iConnect] (http://cowbell.employees.org/~lisa/m2x/index.html) 
+* [iConnect] (http://cowbell.employees.org/~lisa/m2x1/index.html) 
 
 
 ## Installation
 Pull the repository.
-update the python environment 
-```
-pip install -r  python.requirements.txt
-```
+
 
 ## Running
 This step consists of two components.
 
-1. running the flask application on your server (optional)
-
-2. Viewing the top level index.html page with your browser. 
+2. View the top level index.html page with your browser. 
 
  
 http://<localserverName>/<git repository>/index.html
 
-
-You can use the existing flask server which is running and has it's name coded into
-the ibConnect.js file
-- OR- 
-If you want to run your own flask server locally,
-in js/ibConnect.js change the varible flaskServerName where the flask application is runnin
-```
- var flaskServerName = "<your server name>"
-
-```
-
-startup the flask server
-
-```
-python flaskLocalhostServer.py
-```
-
 ## Testing
 Upon loading index.html the page should display default locations and pull their most current stream data. 
-When the "update locations" button is pushed, page will pull all new locations associated with
-the account and then pull updated stream data for the devices.
+Selecting the regions will filter the list of locations displayed. Each location can be selected with a checkbox to
+display the bandwidth information in an information panel. It will also animate the marker to visually indicate the
+location on the map. Each map marker can be selected to also show the bandwidth information at that site. The site
+will also animate upon selection. 
 
 ## Contributions
 Any suggestions for updating welcome!

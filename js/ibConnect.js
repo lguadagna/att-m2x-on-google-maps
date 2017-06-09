@@ -49,14 +49,10 @@
           }).done(function(result){
            console.log('Sample of data: ', result );
                   $('#error').css({'visibility': 'hidden'});
-                 //console.log(locations);
-                 //console.log('vs');
                  console.log( result);
                  // should copy entire array in javascript
                  locations = []; 
                  locations = result.concat();
-                 //locations = JSON.parse(JSON.stringify(location_arr));
-                 //return locatioJSON.parse(JSON.stringify(arr1));n_arr;
 //                 clear marker array 
                  deleteMarkers(); 
                  initMap();
@@ -79,8 +75,7 @@
 //       -H "X-M2X-KEY: 3ca45efac99756802ab65c4250e27cb2"
          //var m2x_url = 'http://api-m2x.att.com/v2/devices/' + deviceID + '/streams'; 
          
-          var bps_url = "HTTP://" + flaskServerName + ":5000/getStream/" + deviceID; 
-          //console.log('sending BPS request to attm2x ' +  bps_url);
+          var bps_url = "HTTP://" + flaskServerName + ":5000/getStream/" + deviceID;
           $.ajax({
  
              crossDomain: true, 
@@ -97,7 +92,6 @@
                          },
           }).done(function(result){
              $('#error').css({'visibility': 'hidden'});
-           //console.log('Update locations bps: ', result );
            // turn result into a JSON 'object notation object'
            updateLocationData(deviceID, result); 
            
@@ -113,7 +107,6 @@
       function updateLocationData(deviceID, result) {
             for (var i = 0; i < locations.length; i++) {
                if (locations[i].id == deviceID ) {
-                  //console.log("updating bps " + locations[i].id + " " + result);
                   var speeds = JSON.parse(result);
                   locations[i].bpsu = speeds.bpsu;
                   locations[i].bpsd = speeds.bpsd;
@@ -144,7 +137,6 @@
       
       function findLocationSpeed(deviceID) {
             for (var i = 0; i < locations.length; i++) {
-               //console.log(locations[i].id + " checking " + deviceID);
                if (locations[i].id == deviceID ) {
                   return {'bpsu': locations[i].bpsu, 'bpsd': locations[i].bpsd}; 
                } 
@@ -167,38 +159,28 @@
           // Get the position from the location array.
           var position = locations[i].location;
           var title = locations[i].name;
-          //console.log(i + " mapping: " + title );
           var key = locations[i].id; 
-          
           // Create a marker per location, and put into markers array. 
-      
           var marker = new google.maps.Marker({
             map: map,
             position: position,
             title: title,
-            //bpsu: bpsu,
-            //bpsd: bpsd,
             key: key, 
             //animation: google.maps.Animation.DROP,
             id: i
           });
 //          default color marker 
           marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
-
           // Push the marker to our array of markers.
           markers.push(marker);
-
           // Create an onclick event to open an infowindow at each marker.
           marker.addListener('click', function() {
             populateInfoWindow(this, largeInfowindow);
-         
           });
           bounds.extend(markers[i].position);
         }
          map.fitBounds(bounds);
          show("All");
-        
-        //setupListeners(); 
       } 
       
          
@@ -211,15 +193,12 @@
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
           var result = (findLocationSpeed(marker.key));
-       
-         
           markerText = marker.title + " <br> Up: " + result.bpsu + " <br> Down: " + result.bpsd; 
           infowindow.setContent('<div>' + markerText + '</div>');
           infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick',function(){
-            infowindow.setMarker = null;
-            
+            infowindow.setMarker = null; 
           });
           bounceMark(marker); 
         }
@@ -238,48 +217,32 @@
         var foundMarker; 
 
           for (var i = 0; i < markers.length; i++) {
-            
             if (markers[i].key == selectedLocation.id ) {
                 foundMarkerIndex = i;
                 foundMarker = markers[i]; 
 // bounce it
-            //console.log(markers[i].key);  
           } }
         foundMarker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function()
-                       { foundMarker.setAnimation(null); }, 700 ); 
-            
+                       { foundMarker.setAnimation(null); }, 700 );   
       } 
 
       // This function will loop through the markers array and display them all.
       function show(newRegion) {
-        //clearMarkers() ;
-       
-        //console.log("update to: " , newRegion );
         var bounds = new google.maps.LatLngBounds();
         // Extend the boundaries of the map for each marker and display the marker
-        //console.log("markers: " + markers.length);
-      
         for (var i = 0; i < markers.length; i++) {
           if ( newRegion == "All" ) {
-          //console.log( locations[i].location.region, newRegion); 
           markers[i].setMap(map);
-          
-          bounds.extend(markers[i].position);
-          //console.log(locations[i].name + " all in progress updating" );        
+          bounds.extend(markers[i].position);  
           }   
           else   {
           if (locations[i].location.region == newRegion ) {
-          //console.log( locations[i].location.region, newRegion); 
           markers[i].setMap(map);
           // add visible items
- 
-          bounds.extend(markers[i].position);
-          //console.log(locations[i].name + " in progress updating" );        
+          bounds.extend(markers[i].position);       
           } else {
             markers[i].setMap(null);
-            //console.log(locations[i].name + " in removing array element" );
-        
             /*remove visible Item*/
           }
           }
@@ -309,7 +272,6 @@
         clearMarkers();
         markers = [];
       }
-
 
       // This function will loop through the listings and hide them all.
       function hideMarkers() {
