@@ -3,28 +3,38 @@
 // License: MIT (http://www.opensource.org/licenses/mit-license.php)
       
       var map;
-      var flaskServerName = "cowbell.employees.org"
+      var flaskServerName = "cowbell.employees.org";
       
+     var locations = [ 
+	
+	 {id: '41d853773e740b89da629dbca6570c2a', name: '101 Cooper St', 
+     location: {lat: 36.9752703, lng: -122.0283402, region: "SC" }, bpsu: 10200, bpsd: 3000},
+	 {id: '3be9579d6089fe95dbffb0186f752be4', name: 'Valencia Apartments, San Louis Obispo', 
+     location: {lat: 35.29287, lng:-120.6762382, region: "MID" }, bpsu: 44000, bpsd: 40000},
+	 {id: 'a58829f26dc86cc96c4539240d8676ce', name: 'Swanton Berry Farm', 
+     location: {lat:  37.0303727, lng: -122.2205668, region: "SC" }, bpsu: 773, bpsd: 45000},
+	 {id: 'e065dbf7a12c43f7e0d910ea31992826', name: 'RoadHouse', 
+     location: {lat: 37.0109223  , lng: -122.1938546, region: "SC"   }, bpsu: 45000, bpsd: 45000 },
+  
+    {id: 'a0f2093dd325f1e43a175839d02d049f', name: 'Lassens', 
+     location: {lat: 35.2948578  , lng: -120.6698484, region: "MID"   }, bpsu: 45000, bpsd: 45000 },
+    {id: 'd188b6e5617cb5b0cfdb9b26217b4257', name: 'scoutCoffeeHouse', 
+     location: {lat: 35.2945799846  , lng: -120.669866502, region: "MID"   }, bpsu: 45000, bpsd: 45000 },
+    {id: '1bce8e5ed43a5daaf85bc4516f8a575d', name: 'San Jose Home', 
+     location: {lat: 37.3941  , lng: -121.835, region: "BA"   }, bpsu: 45000, bpsd: 45000 }
+        
+  
+   ];	
+	 
       // Create a new blank array for all the listing markers.
       var markers = [];
-      
-       // sensor locations, need to move to Model
-       // sensor locations, need to move to Model
-      var locations = [
-        {id: '1bce8e5ed43a5daaf85bc4516f8a575d', name: '1010 Last Chance Rd', location: {lat:37.0960644, lng: -122.2622506, region: "SC" }, bpsu: 11345, bpsd: 2000 },
-        {id: '41d853773e740b89da629dbca6570c2a', name: '101 Cooper St', location: {lat: 36.9752703, lng: -122.0283402, region: "SC" }, bpsu: 10200, bpsd: 3000},
-        {id: '84186b7f2d485f9ac0e2477b6002f5a1', name: '3538 El Grande Dr', location: {lat: 37.3941051, lng: -121.8350167, region: "BA" }, bpsu: 56000, bpsd: 30000},
-        {id: '3be9579d6089fe95dbffb0186f752be4', name: 'Valencia Apartments, San Louis Obispo', location: {lat: 35.29287, lng:-120.6762382, region: "MID" }, bpsu: 44000, bpsd: 40000},
-        {id: 'a58829f26dc86cc96c4539240d8676ce', name: 'Swanton Berry Farm', location: {lat:  37.0303727, lng: -122.2205668, region: "BA" }, bpsu: 773, bpsd: 45000},
-        {id: 'e065dbf7a12c43f7e0d910ea31992826', name: 'My Automobile', location: {lat: 37.0960644  , lng: -122.2622506, region: "MID"   }, bpsu: 45000, bpsd: 45000 }
-      ];
       
      // a nice explaination of asynch calls and responses 
      //https://stackoverflow.com/questions/16076009/confused-on-jquery-ajax-done-function
      function runPyScript(){
          var m2x_url = "HTTP://" + flaskServerName + ":5000/getM2XNames"; 
          console.log('sending device request to getM2XNames' +  m2x_url);
-         var ajResult = $.ajax({
+         $.ajax({
              url: m2x_url,
              dataType: "jsonp",
              crossDomain: true,
@@ -53,18 +63,14 @@
                  updateDeviceSpeeds(); 
 
              } );
-     };
+     }
      
 //     this submit button goes with the script above
        $('#submitbutton').click(function(){
         console.log("clicked submit button");
-        result = runPyScript();
+        runPyScript();
            });
        
-       
-function postResults(data) {
-      console.log(data) ;   
-}
 
 // we need an att call which returns jsonp for integration into web browser*       
      function updateBPS(deviceID){
@@ -74,8 +80,8 @@ function postResults(data) {
          //var m2x_url = 'http://api-m2x.att.com/v2/devices/' + deviceID + '/streams'; 
          
           var bps_url = "HTTP://" + flaskServerName + ":5000/getStream/" + deviceID; 
-          console.log('sending BPS request to attm2x ' +  bps_url);
-          var ajResult = $.ajax({
+          //console.log('sending BPS request to attm2x ' +  bps_url);
+          $.ajax({
  
              crossDomain: true, 
              url: bps_url,
@@ -91,12 +97,12 @@ function postResults(data) {
                          },
           }).done(function(result){
              $('#error').css({'visibility': 'hidden'});
-           console.log('Update locations bps: ', result );
+           //console.log('Update locations bps: ', result );
            // turn result into a JSON 'object notation object'
            updateLocationData(deviceID, result); 
            
              } );
-     };
+     }
      
       function updateDeviceSpeeds() {
             for (var i = 0; i < locations.length; i++) {
@@ -108,7 +114,7 @@ function postResults(data) {
             for (var i = 0; i < locations.length; i++) {
                if (locations[i].id == deviceID ) {
                   //console.log("updating bps " + locations[i].id + " " + result);
-                  speeds = JSON.parse(result);
+                  var speeds = JSON.parse(result);
                   locations[i].bpsu = speeds.bpsu;
                   locations[i].bpsd = speeds.bpsd;
                   updateMarker(deviceID, speeds.bpsu, speeds.bpsd) ; 
@@ -119,7 +125,7 @@ function postResults(data) {
      function updateMarker(markerKey, bpsu, bpsd ){
       for (var i = 0; i < markers.length; i++) {
       if (markers[i].key == markerKey) { 
-          marker = markers[i]; 
+          var marker = markers[i]; 
           if (bpsu > 40000 || bpsd > 40000 ) {
             marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
           } else
@@ -138,7 +144,7 @@ function postResults(data) {
       
       function findLocationSpeed(deviceID) {
             for (var i = 0; i < locations.length; i++) {
-               console.log(locations[i].id + " checking " + deviceID);
+               //console.log(locations[i].id + " checking " + deviceID);
                if (locations[i].id == deviceID ) {
                   return {'bpsu': locations[i].bpsu, 'bpsd': locations[i].bpsd}; 
                } 
@@ -159,13 +165,10 @@ function postResults(data) {
         // The following group uses the location array to create an array of markers on initialize.
         for (var i = 0; i < locations.length; i++) {
           // Get the position from the location array.
-          
           var position = locations[i].location;
           var title = locations[i].name;
-          console.log(i + " mapping: " + title );
+          //console.log(i + " mapping: " + title );
           var key = locations[i].id; 
-          var bpsu = locations[i].bpsu;
-          var bpsd = locations[i].bpsd;
           
           // Create a marker per location, and put into markers array. 
       
@@ -176,7 +179,7 @@ function postResults(data) {
             //bpsu: bpsu,
             //bpsd: bpsd,
             key: key, 
-            animation: google.maps.Animation.DROP,
+            //animation: google.maps.Animation.DROP,
             id: i
           });
 //          default color marker 
@@ -184,14 +187,17 @@ function postResults(data) {
 
           // Push the marker to our array of markers.
           markers.push(marker);
+
           // Create an onclick event to open an infowindow at each marker.
           marker.addListener('click', function() {
             populateInfoWindow(this, largeInfowindow);
+         
           });
           bounds.extend(markers[i].position);
         }
          map.fitBounds(bounds);
-         show("SC");
+         show("All");
+        
         //setupListeners(); 
       } 
       
@@ -204,33 +210,78 @@ function postResults(data) {
         // Check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
-          result = (findLocationSpeed(marker.key));
-          resultStringified = JSON.stringify(result);
+          var result = (findLocationSpeed(marker.key));
+       
          
           markerText = marker.title + " <br> Up: " + result.bpsu + " <br> Down: " + result.bpsd; 
           infowindow.setContent('<div>' + markerText + '</div>');
-          infowindow.open(map, marker)
+          infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick',function(){
             infowindow.setMarker = null;
             
           });
+          bounceMark(marker); 
         }
         }
-      
+        
+        function bounceMark(M) {
+            M.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function()
+                       { M.setAnimation(null); }, 700 );     
+      }
+            
+        
+      function bounceMarker(selectedLocation) {
+//        find marker
+        var foundMarkerIndex;
+        var foundMarker; 
+
+          for (var i = 0; i < markers.length; i++) {
+            
+            if (markers[i].key == selectedLocation.id ) {
+                foundMarkerIndex = i;
+                foundMarker = markers[i]; 
+// bounce it
+            //console.log(markers[i].key);  
+          } }
+        foundMarker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function()
+                       { foundMarker.setAnimation(null); }, 700 ); 
+            
+      } 
 
       // This function will loop through the markers array and display them all.
       function show(newRegion) {
         //clearMarkers() ;
-        console.log("here in " , newRegion);
+       
+        //console.log("update to: " , newRegion );
         var bounds = new google.maps.LatLngBounds();
         // Extend the boundaries of the map for each marker and display the marker
+        //console.log("markers: " + markers.length);
+      
         for (var i = 0; i < markers.length; i++) {
-          if (locations[i].location.region == newRegion ) {
+          if ( newRegion == "All" ) {
+          //console.log( locations[i].location.region, newRegion); 
           markers[i].setMap(map);
-
+          
           bounds.extend(markers[i].position);
-          console.log(locations[i].name + " in progress updating" );        
+          //console.log(locations[i].name + " all in progress updating" );        
+          }   
+          else   {
+          if (locations[i].location.region == newRegion ) {
+          //console.log( locations[i].location.region, newRegion); 
+          markers[i].setMap(map);
+          // add visible items
+ 
+          bounds.extend(markers[i].position);
+          //console.log(locations[i].name + " in progress updating" );        
+          } else {
+            markers[i].setMap(null);
+            //console.log(locations[i].name + " in removing array element" );
+        
+            /*remove visible Item*/
+          }
           }
         }
         map.fitBounds(bounds);
@@ -242,7 +293,7 @@ function postResults(data) {
           markers[i].setMap(map);
         }
       } 
-1
+
      // Removes the markers from the map, but keeps them in the array.
       function clearMarkers() {
         setMapOnAll(null);
