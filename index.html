@@ -1,75 +1,64 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="cs/ibConnect.css"/>
-    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script> 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">		
-    <link rel="stylesheet" href="cs/bootstrap-grid.min.css"/>
-	  <link rel="stylesheet" href="cs/bootstrap-reboot.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>		
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		
-		<script src="js/locations.js"></script>
-    <script src="js/ibConnect.js"></script>
-    <script src="js/knockout-3.2.0.js"> </script>
-    <title>ib Connect</title>
-  </head>
-  <body>
-     <div class="container-fluid bg-faded">
-        <h2 class="text-center text-primary bg-faded " >  Real Time Bandwidth Reporting </h2>
-        <div id="error"> 
-				<h4 class="text-left text-danger bg-faded " > Error retrieving stream data </h4></div>
-			  <div class="row">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="cs/ibConnect.css"/>
+      <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script> 
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="cs/bootstrap-grid.min.css"/>
+      <link rel="stylesheet" href="cs/bootstrap-reboot.min.css"/>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>		
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		
+      <script src="js/locations.js"></script>
+      <script src="js/ibConnect.js"></script>
+      <script src="js/knockout-3.2.0.js"> </script>
+      <title>ib Connect</title>
+   </head>
+   <body>
+      <div class="container-fluid bg-faded">
+         <h2 class="text-center text-primary bg-faded " >  Real Time Bandwidth Reporting </h2>
+         <div id="error">
+            <h4 class="text-left text-danger bg-faded " > Error retrieving stream data </h4>
+         </div>
+         <div class="row">
             <nav class="col-sm-3  bg-faded sidebar">
-              <h5 class="text-primary" > ibConnect </h5>
-							<h6> <a href="https://m2x.att.com/"><span class="glyphicon glyphicon-link"></span> Using att IOT sensors</a> </h6>
-              <div class="col-sm-12 ">     
-                <div class="nav flex-column ">
-						        <select data-bind="click: showRegion,  options: optionValues, value: selectedOptionValue"></select>
-									<div class="col-sm-12">
-										<li class=""  data-bind="foreach: visibleLocations ">
-										  <input type="checkbox"
-													data-bind="value:$data, click: updateChecked,  checked: $parent.selectedLocations" />
-									    <span data-bind="text: name" style="overflow: scroll"></span>
-											<br>
-										</li>
-										<hr /> 
-										<span class="" data-bind="foreach: visibleSelectedLocations" >
-										<h5><div > 
-											<span data-bind="text: $data.name" >
-										  </span> bpsu:  <span data-bind="text: $data.bpsu">
-											</span> bpsd:  <span data-bind="text: $data.bpsd" overflow: auto>  </span>
-									 
-										</div>
-									  	</h5>
-											<br>
-										</span>	
-							    </div>
-								</div>
-							</div>						
+               <h5 class="text-primary" > ibConnect </h5>
+               <h6> <a href="https://m2x.att.com/"><span class="glyphicon glyphicon-link"></span> Using att IOT sensors</a> </h6>
+               <div class="col-sm-12 ">
+                  <div class="nav flex-column ">
+                     <select data-bind="click: showRegion,  options: optionValues, value: selectedOptionValue"></select>
+                     <div >
+                        <span data-bind="foreach: visibleLocations ">
+                        <input type="checkbox"
+                           data-bind="value:$data, click: updateChecked,  checked: $parent.selectedLocations" />
+                        <span data-bind="text: name"></span>
+                        <br>
+                        </span>
+                        <hr />
+                        <h5>
+                           <span class="" data-bind="foreach: visibleSelectedLocations" >
+                           <span data-bind="text: $data.name" >
+                           </span> bpsu:  <span data-bind="text: $data.bpsu">
+                           </span> bpsd:  <span data-bind="text: $data.bpsd">  </span>
+                           <br>
+                           </span>
+                        </h5>
+                     </div>
+                  </div>
+               </div>
             </nav>
             <main class = "col-sm-9  pt-3">
-      
-           <!-- Responsive iFrame -->
-                  <div class="Flexible-container">
-                     <div id="map"  ></div>
-                  </div>       
-                <script async defer
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfe8r1yXNiDjgUF9LT6DO-TXVeJR2uwPM&v=3&callback=initMap">
-                </script>   
+               <!-- Responsive iFrame -->
+               <div class="Flexible-container">
+                  <div id="map"  ></div>
+               </div>
+               <script async defer
+                  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfe8r1yXNiDjgUF9LT6DO-TXVeJR2uwPM&v=3&callback=initMap" onerror="googleError()" ></script>  	
             </main>
-        </div>
-<!--      end container-->
+         </div>
+         <!--      end container-->
       </div>
-<!--     this has to be at the bottom to function -->
- 	<script type="text/javascript" src="js/KOmodel.js" > </script>
-	<script>
-	
-	</script>
-	
-  </body>
-  
-  
-  
+      <!--     this has to be at the bottom to function -->
+      <script type="text/javascript" src="js/KOmodel.js" > </script>
 </html>

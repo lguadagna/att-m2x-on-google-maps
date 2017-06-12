@@ -11,7 +11,7 @@ $(document).ready(function() {
         var visible_selected = locations.slice();
         self.bandwidth = ko.observable("2500");
         self.region = "All";
-        //	sets region variable and calls update to map 
+        //	sets region variable and calls   to map 
         self.showRegion = function() {
             if (this.selectedOptionValue() == "Bay Area") {
                 self.region = "BA";
@@ -94,22 +94,5 @@ $(document).ready(function() {
     }
 
     ko.applyBindings(new viewModel()); // This makes Knockout get to work
-
-    //	   after page has loaded, query att site for updated speeds
-
-    updateDeviceSpeeds();
-
-    // delay for 10 seconds and then check if map has a value returned from google
-    // if not display error message 
-    delay(function() {
-        if (map) {
-            x = 1;
-            //console.log("map has a value");
-        } else
-            alert("can not get a value from google for map, check network connections");
-    }, 5000);
-
-
-
-
+   
 });
